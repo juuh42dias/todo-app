@@ -1,0 +1,53 @@
+<div class="container">
+  <div class="page-header">
+    <h1>📋 My ToDo Board</h1>
+    <p>Organize your tasks beautifully</p>
+  </div>
+
+  <div class="text-center">
+    <%= link_to '+ New Task', new_task_path, class: 'new-task-btn' %>
+  </div>
+
+  <% if notice %>
+    <div class="alert alert-success">
+      <%= notice %>
+    </div>
+  <% end %>
+
+  <% if @tasks.any? %>
+    <div class="tasks-grid">
+      <% @tasks.each do |task| %>
+        <div class="task-card <%= 'completed' if task.completed %>">
+          <div class="task-title">
+            <%= task.title %>
+          </div>
+          <% if task.description.present? %>
+            <div class="task-description">
+              <%= simple_format(task.description) %>
+            </div>
+          <% end %>
+          <div class="task-actions">
+            <%= link_to 'Show', task, class: 'btn btn-primary btn-sm' %>
+            <%= link_to 'Edit', edit_task_path(task), class: 'btn btn-secondary btn-sm' %>
+            <%= link_to 'Delete', task, method: :delete,
+                data: { confirm: 'Are you sure?' },
+                class: 'btn btn-danger btn-sm' %>
+            <% if task.completed? %>
+              <%= link_to 'Mark Incomplete', task_path(task, task: { completed: false }),
+                  method: :patch, class: 'btn btn-warning btn-sm' %>
+            <% else %>
+              <%= link_to 'Mark Complete', task_path(task, task: { completed: true }),
+                  method: :patch, class: 'btn btn-success btn-sm' %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="empty-state">
+      <h2>No tasks yet!</h2>
+      <p>Create your first task to get started.</p>
+    </div>
+  <% end %>
+</div>
+

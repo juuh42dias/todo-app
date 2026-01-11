@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="form-container">
+    <div class="page-header" style="text-align: left; margin-bottom: 30px;">
+      <h1 style="font-size: 2rem; color: #2c3e50;">Task Details</h1>
+    </div>
+
+    <div class="task-card" style="margin-bottom: 20px;">
+      <div class="task-title">
+        <%= @task.title %>
+      </div>
+      <% if @task.description.present? %>
+        <div class="task-description">
+          <%= simple_format(@task.description) %>
+        </div>
+      <% end %>
+      <div style="margin-top: 15px;">
+        <strong>Status:</strong>
+        <% if @task.completed? %>
+          <span style="color: #28a745; font-weight: 600;">✓ Completed</span>
+        <% else %>
+          <span style="color: #667eea; font-weight: 600;">○ Pending</span>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="task-actions">
+      <%= link_to 'Edit', edit_task_path(@task), class: 'btn btn-primary' %>
+      <%= link_to 'Back to List', tasks_path, class: 'btn btn-secondary' %>
+      <%= link_to 'Delete', @task, method: :delete,
+          data: { confirm: 'Are you sure?' },
+          class: 'btn btn-danger' %>
+    </div>
+  </div>
+</div>
+
