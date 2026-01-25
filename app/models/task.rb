@@ -15,4 +15,3 @@ class Task < ApplicationRecord
     self.position ||= 0
   end
 end
-
