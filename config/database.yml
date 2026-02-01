@@ -89,8 +89,6 @@ production:
   primary: &primary_production
     <<: *default
     database: my_todo_app_production
-    username: my_todo_app
-    password: <%= ENV["MY_TODO_APP_DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production
     database: my_todo_app_production_cache
