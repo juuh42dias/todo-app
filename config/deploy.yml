@@ -22,7 +22,6 @@ env:
   secret:
     - RAILS_MASTER_KEY
     - DB_PASSWORD
-    - POSTGRES_PASSWORD
 
 builder:
   arch: amd64
@@ -35,6 +34,6 @@ accessories:
       clear:
         POSTGRES_DB: my_todo_app_production
       secret:
-        - POSTGRES_PASSWORD
+        - DB_PASSWORD
     volumes:
       - postgres_data:/var/lib/postgresql/data
