@@ -91,11 +91,8 @@ jobs:
       - name: Configure SSH
         run: |
           mkdir -p ~/.ssh
-          echo "Host ${{ vars.SERVER_IP }}
-              User kamal
-              Password ${{ secrets.SSH_PASSWORD }}
-              StrictHostKeyChecking no" > ~/.ssh/config
-          chmod 600 ~/.ssh/config
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
 
       - name: Deploy with Kamal
         run: kamal deploy
