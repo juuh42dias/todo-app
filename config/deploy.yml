@@ -8,7 +8,7 @@ proxy:
   ssl: true
   host: labs.juliana.dev
 ssh:
-  user: root
+  user: kamal
 registry:
   server: docker.io
   username: juuh42dias
