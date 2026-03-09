@@ -83,10 +83,19 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan -H ${{ vars.SERVER_IP }} >> ~/.ssh/known_hosts 2>/dev/null || true
 
+      - name: Install SSHpass
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y sshpass
+
       - name: Configure SSH
         run: |
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
+          mkdir -p ~/.ssh
+          echo "Host ${{ vars.SERVER_IP }}
+              User kamal
+              Password ${{ secrets.SSH_PASSWORD }}
+              StrictHostKeyChecking no" > ~/.ssh/config
+          chmod 600 ~/.ssh/config
 
       - name: Deploy with Kamal
         run: kamal deploy
