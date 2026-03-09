@@ -90,7 +90,10 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
 
       - name: Deploy with Kamal
-        run: kamal deploy
+        run: |
+          echo "${{ secrets.KAMAL_REGISTRY_PASSWORD }}" > .kamal_registry_password
+          echo "${{ secrets.RAILS_MASTER_KEY }}" > .rails_master_key
+          kamal deploy
         env:
           KAMAL_REGISTRY_PASSWORD: ${{ secrets.KAMAL_REGISTRY_PASSWORD }}
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
