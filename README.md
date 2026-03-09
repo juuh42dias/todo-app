@@ -1,5 +1,7 @@
 # README
 
+[![CI/CD](https://github.com/juuh42dias/todo-app/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/juuh42dias/todo-app/actions/workflows/ci-cd.yml)
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
