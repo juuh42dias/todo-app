@@ -1,0 +1,57 @@
+# Render Blueprint for Rails 8 application with PostgreSQL
+
+services:
+  # Rails web service
+  - type: web
+    name: myapp-web
+    runtime: ruby
+    plan: starter  # Options: free, starter, standard, pro, pro plus, pro max, pro ultra
+    region: oregon  # Options: oregon, ohio, virginia, frankfurt, singapore
+    buildCommand: './bin/render-build.sh'
+    startCommand: 'bundle exec puma -C config/puma.rb'
+    preDeployCommand: 'bundle exec rails db:migrate'  # Runs migrations before deploy
+    
+    envVars:
+      # Database connection string - automatically populated from the database
+      - key: DATABASE_URL
+        fromDatabase:
+          name: myapp-db
+          property: connectionString
+      
+      # Rails master key for encrypted credentials (sync: false means you'll be prompted to enter it manually)
+      - key: RAILS_MASTER_KEY
+        sync: false
+      
+      # Rails environment
+      - key: RAILS_ENV
+        value: production
+      
+      # Rack environment
+      - key: RACK_ENV
+        value: production
+      
+      # Recommended: Set WEB_CONCURRENCY to avoid memory issues
+      # Adjust based on your app's memory requirements
+      - key: WEB_CONCURRENCY
+        value: 2
+      
+      # Rails log level
+      - key: RAILS_LOG_LEVEL
+        value: info
+      
+      # Enable or disable asset host
+      - key: RAILS_SERVE_STATIC_FILES
+        value: true
+      
+      # Rails max threads (should match puma.rb config)
+      - key: RAILS_MAX_THREADS
+        value: 5
+
+databases:
+  # PostgreSQL database
+  - name: myapp-db
+    databaseName: myapp_production
+    plan: starter  # Options: free, starter, standard, pro, pro plus, pro max, pro ultra
+    region: oregon  # Should match web service region
+    # User will be automatically created
+    # ipAllowList can be added here if you need to restrict access

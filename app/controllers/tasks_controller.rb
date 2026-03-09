@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :set_task, only: [ :show, :edit, :update, :destroy ]
 
   def index
     @tasks = Task.order(:position, :created_at)
@@ -17,7 +17,7 @@ class TasksController < ApplicationController
     @task.position = Task.maximum(:position).to_i + 1
 
     if @task.save
-      redirect_to @task, notice: 'Task was successfully created.'
+      redirect_to @task, notice: "Task was successfully created."
     else
       render :new
     end
@@ -25,7 +25,7 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      redirect_to @task, notice: 'Task was successfully updated.'
+      redirect_to @task, notice: "Task was successfully updated."
     else
       render :edit
     end
@@ -33,7 +33,7 @@ class TasksController < ApplicationController
 
   def destroy
     @task.destroy
-    redirect_to tasks_url, notice: 'Task was successfully deleted.'
+    redirect_to tasks_url, notice: "Task was successfully deleted."
   end
 
   private
@@ -46,4 +46,3 @@ class TasksController < ApplicationController
     params.require(:task).permit(:title, :description, :completed, :position)
   end
 end
-

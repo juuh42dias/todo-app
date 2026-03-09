@@ -1,0 +1,42 @@
+# syntax=docker/dockerfile:1
+# Development Dockerfile for Rails application
+# Based on https://docs.docker.com/guides/ruby/containerize/
+
+ARG RUBY_VERSION=3.4.7
+FROM docker.io/library/ruby:${RUBY_VERSION}-slim
+
+# Install dependencies
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y \
+    build-essential \
+    git \
+    libvips \
+    libsqlite3-dev \
+    nodejs \
+    npm \
+    curl \
+    && rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+# Set working directory
+WORKDIR /rails
+
+# Install bundler
+RUN gem install bundler
+
+# Copy Gemfile and Gemfile.lock
+COPY Gemfile Gemfile.lock ./
+
+# Install gems
+RUN bundle install
+
+# Copy application code
+COPY . .
+
+# Create storage directory for SQLite databases
+RUN mkdir -p storage
+
+# Expose port
+EXPOSE 3000
+
+# Default command
+CMD ["./bin/rails", "server", "-b", "0.0.0.0"]
