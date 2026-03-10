@@ -18,8 +18,10 @@ env:
   clear:
     DB_HOST: my_todo_app-db
     DB_NAME: my_todo_app_production
+    DB_USER: my_todo_app
   secret:
     - RAILS_MASTER_KEY
+    - DB_PASSWORD
 
 builder:
   arch: amd64
