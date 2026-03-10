@@ -18,8 +18,6 @@ env:
   clear:
     DB_HOST: my_todo_app-db
     DB_NAME: my_todo_app_production
-    DB_USER: my_todo_app
-    DB_PASSWORD: $DB_PASSWORD
   secret:
     - RAILS_MASTER_KEY
 
@@ -33,7 +31,8 @@ accessories:
     env:
       clear:
         POSTGRES_DB: my_todo_app_production
-        POSTGRES_USER: my_todo_app
-        POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      secret:
+        - POSTGRES_USER
+        - POSTGRES_PASSWORD
     volumes:
       - postgres_data:/var/lib/postgresql/data
