@@ -104,7 +104,7 @@ jobs:
           echo "POSTGRES_USER=my_todo_app" >> .kamal/secrets
           echo "POSTGRES_PASSWORD=$DB_PASSWORD" >> .kamal/secrets
           echo "DB_PASSWORD=$DB_PASSWORD" >> .kamal/secrets
-          kamal accessory reboot db
+          kamal accessory boot db || true
           kamal deploy
         env:
           KAMAL_REGISTRY_PASSWORD: ${{ secrets.KAMAL_REGISTRY_PASSWORD }}
